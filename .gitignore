@@ -1,0 +1,123 @@
+# Node
+node_modules/
+npm-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+package-lock.json.tmp
+.pnpm-store/
+
+# Build outputs
+dist/
+build/
+out/
+.tmp/
+.cache/
+coverage/
+lib/
+public/build/
+
+# TypeScript
+*.tsbuildinfo
+
+# Logs
+logs/
+*.log
+*.log.*
+debug.log
+
+# OS files
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# IDEs / editors
+.vscode/
+.vscode-test/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Environment variables / secrets
+.env
+.env.*         # backup variants, .env.local, .env.test etc (if you want some env files tracked, remove specific ones)
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# MacOS extended attributes
+.fseventsd
+*.DS_Store
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+docker-compose*.yml.tmp
+**/Dockerfile.*
+
+# Containers / virtualization
+.vagrant/
+.vagrant.d/
+
+# Databases / local dev files
+*.sqlite
+*.db
+prisma/dev.db
+prisma/.env         
+
+# Prisma query engine / generated binaries
+node_modules/.prisma/
+.prisma/
+# Prisma query engine binary names (darwin/linux/win)
+libquery_engine-*
+query_engine-*
+query_engine-*.node
+query_engine-*.wasm
+query_engine_*.so
+query_engine_*.dylib
+
+# Generated client 
+prisma-client/
+
+# Generated from build tools, compilers
+*.tsbuildinfo
+*.map
+
+# Test output
+coverage/
+nyc_output/
+jest-report/
+
+# Package manager lock backups and duplicates
+package-lock.json.*
+yarn.lock.*
+pnpm-lock.yaml.*
+
+# Editor swap / temp files
+*~
+*.swp
+*.swo
+*.tmp
+*.temp
+
+# MacOS Time Machine local snapshots
+.DocumentRevisions-V100
+.Trashes
+.Spotlight-V100
+
+# Security / keys
+*.pem
+*.key
+*.crt
+
+# Misc
+.idea/
+.vscode/
+.envrc
+*.seed
+*.bak
+*.backup
+
+**/node_modules/
+
