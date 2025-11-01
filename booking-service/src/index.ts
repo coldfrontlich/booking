@@ -1,5 +1,5 @@
 import { Kafka } from 'kafkajs'
-import { PrismaClient } from '@prisma/client'
+import { Prisma, PrismaClient } from '@prisma/client'
 
 const prisma = new PrismaClient()
 
@@ -47,33 +47,35 @@ const start = async () => {
 					data: { status: 'CHECKING_AVAILABILITY' },
 				})
 
-				const finalStatus = await prisma.$transaction(async tx => {
-					await tx.booking.update({
-						where: { id: booking.id },
-						data: { status: 'CHECKING_AVAILABILITY' },
-					})
+				const finalStatus = await prisma.$transaction(
+					async (tx: Prisma.TransactionClient) => {
+						await tx.booking.update({
+							where: { id: booking.id },
+							data: { status: 'CHECKING_AVAILABILITY' },
+						})
 
-					const bookingTime = new Date(booking.datetime)
-					const timeWindowStart = new Date(
-						bookingTime.getTime() - 2 * 60 * 60 * 1000
-					)
-					const timeWindowEnd = new Date(
-						bookingTime.getTime() + 2 * 60 * 60 * 1000
-					)
-					const conflictingBooking = await tx.booking.findFirst({
-						where: {
-							restaurantName: booking.restaurantName,
-							datetime: {
-								gte: timeWindowStart,
-								lte: timeWindowEnd,
+						const bookingTime = new Date(booking.datetime)
+						const timeWindowStart = new Date(
+							bookingTime.getTime() - 2 * 60 * 60 * 1000
+						)
+						const timeWindowEnd = new Date(
+							bookingTime.getTime() + 2 * 60 * 60 * 1000
+						)
+						const conflictingBooking = await tx.booking.findFirst({
+							where: {
+								restaurantName: booking.restaurantName,
+								datetime: {
+									gte: timeWindowStart,
+									lte: timeWindowEnd,
+								},
+								status: 'CONFIRMED',
+								id: { not: booking.id },
 							},
-							status: 'CONFIRMED',
-							id: { not: booking.id },
-						},
-					})
+						})
 
-					return conflictingBooking ? 'REJECTED' : 'CONFIRMED'
-				})
+						return conflictingBooking ? 'REJECTED' : 'CONFIRMED'
+					}
+				)
 
 				await prisma.booking.update({
 					where: { id: booking.id },
