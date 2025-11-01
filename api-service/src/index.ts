@@ -75,11 +75,12 @@ app.post('/bookings', async (req, res) => {
 
 		return res.status(201).json(booking)
 	} catch (error) {
+		console.error('Create booking error:', error)
 		return res.status(500).json({ error: 'Error while creating booking' })
 	}
 })
 
-app.get('/booking/:id', async (req, res) => {
+app.get('/bookings/:id', async (req, res) => {
 	try {
 		const { id } = req.params
 		const booking = await prisma.booking.findUnique({ where: { id } })

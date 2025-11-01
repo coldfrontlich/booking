@@ -39,6 +39,7 @@ desktop.ini
 *.sublime-project
 
 # Environment variables / secrets
+*.env
 .env
 .env.*         # backup variants, .env.local, .env.test etc (if you want some env files tracked, remove specific ones)
 .env.local
